@@ -60,7 +60,7 @@ public class EnGNet {
         	g.volcarAFichero(sPath + System.getProperty("file.separator") + "grafoCompleto.txt");
         	Grafo gc = new Grafo(g);
         	Grafo grafoPredominante = AlgoritmoKruskal.aplicarKruskal(gc);
-        	Grafo redFinal = anadirRelacionesGRN(grafoPredominante, dg, fAverage, fThb);
+        	Grafo redFinal = anadirRelacionesGRN(grafoPredominante, dg, fAverage, fThb, fKendall, fSpearman, fNMI);
         	//ArrayList<Gen> genes = new ArrayList(redFinal.getNodos());
         	redFinal.volcarAFichero(sPath + System.getProperty("file.separator") + "finalNetwork.txt");    	
         	
@@ -126,7 +126,7 @@ public class EnGNet {
         return g;
      }
 
-    private static Grafo anadirRelacionesGRN(Grafo grafoPredominante, DatosGenes dg, double fAverage, int fThb) {
+    private static Grafo anadirRelacionesGRN(Grafo grafoPredominante, DatosGenes dg, double fAverage, int fThb ,double fKendall, double fSpearman, double fNMI) {
         GRN g = new GRN(grafoPredominante);
         double umbralCor = fAverage;
         int hubThr = fThb;
@@ -149,18 +149,33 @@ public class EnGNet {
 
               for(int j = i + 1; j < numTotal; ++j) {
                  Gen gene2 = (Gen)lista.get(j);
-                 //int cont = false;
+                 int cont = 0;
                  if (!gene1.getNombre().equals(gene2.getNombre())) {
                     float valor1 = Math.abs(medida1.relacionGenGen(gene1, gene2));
                     float valor2 = Math.abs(medida2.relacionGenGen(gene1, gene2));
                     float valor3 = Math.abs(medida3.relacionGenGen(gene1, gene2));
-                    float media = (valor1 + valor2 + valor3) / 3.0F;
-                    if (media >= umbralCor) {
-                       g.addArco(new Arco(gene1.getNombre(), gene2.getNombre(), media));
-                       if (!g.getNodos().contains(gene2.getNombre())) {
-                          g.addNodo(gene2.getNombre());
-                       }
-                    }
+                    
+                     if (valor2 > fKendall) {
+                     ++cont;
+                     }
+
+                     if (valor3 > fSpearman) {
+                     ++cont;
+                     }
+
+                     if (valor1 >= fNMI) {
+                     ++cont;
+                     }
+
+                     if (cont >= 2) { 
+                        float media = (valor1 + valor2 + valor3) / 3.0F;
+                        if (media >= umbralCor) {
+                           g.addArco(new Arco(gene1.getNombre(), gene2.getNombre(), media));
+                           if (!g.getNodos().contains(gene2.getNombre())) {
+                              g.addNodo(gene2.getNombre());
+                           }
+                        }
+                     }
                  }
               }
            }
@@ -170,6 +185,5 @@ public class EnGNet {
 
         return grafoPredominante;
      }
-
 
 }
