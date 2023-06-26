@@ -73,7 +73,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         datasetsPanel.setLayer(loadDatasetButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
 
-        explanationLabel.setText("<html>Select a biological RNA-seq file to generate network with using EnGNet. You can select each input parameter.<html>");
+        explanationLabel.setText("<html>Select a gene expression data file to generate network with using EnGNet. You can select each input parameter.<html>");
         explanationLabel.setPreferredSize(new java.awt.Dimension(958, 48));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
