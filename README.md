@@ -13,7 +13,7 @@ The approach offers several relevant and distinguishing features in relation to 
 
 First you need to install the app throug the app manager. If everything goes well, you will get a new item in the `Apps` menu called `EnGNet`.
 
-Open EnGNet from the `Apps` menu and you'll be presented the configuration dialog. Load an expression array directly from the user folder to perform the evaluation, as well as different
+Open EnGNet from the `Apps` menu and you'll be presented the configuration dialog. Load an gene expression data directly from the user folder to perform the evaluation, as well as different
 threshold values such as NMI, Kendall, Spearman, adding, and Th𝛽 (default values for each parameter are shown in the configuration panel). These files are expected to be in txt format separated by tabs at the top of the coniguration dialog.
 
 ![EnGNet result](imagen/Fig2-inputParameter.png)
@@ -22,10 +22,13 @@ After running EnGNet you will get a network containing all the information gener
 
 ![EnGNet result](imagen/Fig2_edgeChange.png)
 
-The network has a basic style applied to facilitate visual exploration. However, all the data is in the Cytoscape tables so you can create your own styles for visualization. 
+The network has a basic style applied to facilitate visual exploration. 
 
 ## Reference
 Delgado-Chaves FM, Gómez-Vela F, García-Torres M, Divina F, Vázquez Noguera JL. Computational Inference of Gene Co-Expression Networks for the identification of Lung Carcinoma Biomarkers: An Ensemble Approach. Genes. 2019; 10(12):962. https://doi.org/10.3390/genes10120962 
+
+## Cite us
+Under revision
   
 
 ## COPYRIGHT
