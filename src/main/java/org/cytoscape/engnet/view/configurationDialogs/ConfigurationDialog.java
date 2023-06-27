@@ -8,10 +8,7 @@ import org.cytoscape.engnet.controller.utils.CySwing2;
 import org.cytoscape.work.Task;
 import org.cytoscape.work.TaskManager;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author 
- */
+
 public class ConfigurationDialog extends javax.swing.JDialog {
     private final TaskManager taskManager;
     private String sPath;

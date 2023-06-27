@@ -11,10 +11,7 @@ import org.cytoscape.model.CyNetwork;
 import org.cytoscape.work.TaskManager;
 import org.cytoscape.work.TaskIterator;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author Maria del Saz
- */
+
 public class ResultPanelController {
 	private static TaskManager taskManager;
     public static final Map<CyNetwork, ResultPanelController> panels = new HashMap();

@@ -7,10 +7,7 @@ import org.cytoscape.engnet.model.businessobjects.model.Grafo;
 import org.cytoscape.engnet.model.businessobjects.model.io.Gen;
 import org.cytoscape.engnet.model.businessobjects.model.performance.GRN;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author Maria del Saz
- */
+
 public class EnGNetResult {
     private final double fNMI;
     private final double fKendall;

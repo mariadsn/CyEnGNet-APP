@@ -6,10 +6,6 @@ import org.cytoscape.engnet.view.configurationDialogs.ConfigurationDialog;
 import org.cytoscape.work.TaskManager;
 
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author María del Saz Navarro
- */
 public class MenuAction extends AbstractCyAction {
     private final ConfigurationDialog dialog;
     

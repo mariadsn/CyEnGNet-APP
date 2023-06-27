@@ -24,10 +24,7 @@ import org.cytoscape.view.model.CyNetworkViewFactory;
 import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author María del Saz Navarro
- */
+
 public class EnGNet extends AbstractCyActivator {
     @Override
     public void start(BundleContext context) throws Exception {

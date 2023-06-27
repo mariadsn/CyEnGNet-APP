@@ -1,9 +1,5 @@
 package org.cytoscape.engnet.model.businessobjects.exceptions;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author Juan José Díaz Montaña
- */
 public class AnalysisErrorException extends RuntimeException {
     
     /**

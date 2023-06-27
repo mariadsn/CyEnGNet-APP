@@ -14,10 +14,7 @@ import org.cytoscape.application.swing.CytoPanelName;
 import org.cytoscape.application.swing.CytoPanelState;
 import org.cytoscape.service.util.CyServiceRegistrar;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author María del Saz Navarro
- */
+
 public class CySwing2 {
     private static CySwingApplication cySwingApplication;
     private static CyServiceRegistrar serviceRegistrar;

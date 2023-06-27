@@ -11,10 +11,7 @@ import org.cytoscape.engnet.view.configurationDialogs.ConfigurationDialog;
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author Maria del Saz
- */
+
 public class ExecuteEnGNetTask extends AbstractTask {
     private EnGNet engnet;
     private final File sPath;

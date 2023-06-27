@@ -46,11 +46,7 @@ import org.cytoscape.model.CyEdge;
 import org.cytoscape.event.CyEventHelper;
 
 
-
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author Maria del Saz
- */
+ 
 public final class NetworkController {
 	private static CyNetworkFactory networkFactory;
 	private static CyNetworkManager networkManager;

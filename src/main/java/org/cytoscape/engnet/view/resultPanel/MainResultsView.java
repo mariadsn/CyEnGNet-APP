@@ -25,10 +25,7 @@ import org.cytoscape.work.Task;
 import org.cytoscape.work.TaskIterator;
 import org.cytoscape.work.TaskManager;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author Maria del Saz
- */
+
 public class MainResultsView extends javax.swing.JPanel implements CytoPanelComponent {
 	private final TaskManager taskManager;
 	private final NetworkController network;

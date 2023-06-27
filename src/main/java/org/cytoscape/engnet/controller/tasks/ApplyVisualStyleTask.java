@@ -5,10 +5,7 @@ import org.cytoscape.engnet.controller.utils.CySwing2;
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author 
- */
+
 public class ApplyVisualStyleTask extends AbstractTask {
     private final NetworkController network;
     

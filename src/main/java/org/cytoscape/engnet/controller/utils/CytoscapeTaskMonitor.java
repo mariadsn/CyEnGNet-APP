@@ -3,10 +3,7 @@ package org.cytoscape.engnet.controller.utils;
 import org.cytoscape.engnet.model.businessobjects.utils.ProgressMonitor;
 import org.cytoscape.work.TaskMonitor;
 
-/**
- * @license Apache License V2 <http://www.apache.org/licenses/LICENSE-2.0.html>
- * @author Juan José Díaz Montaña
- */
+
 public class CytoscapeTaskMonitor implements ProgressMonitor {
     private final TaskMonitor tm;
     
