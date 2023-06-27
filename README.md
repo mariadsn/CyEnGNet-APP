@@ -24,6 +24,8 @@ After running EnGNet you will get a network containing all the information gener
 
 The network has a basic style applied to facilitate visual exploration. 
 
+*Note:* when downloading the repository you must modify the pom.xml file in the path to the JavaMI.java and jsc.java files by adding your own path.
+
 ## Reference
 Delgado-Chaves FM, Gómez-Vela F, García-Torres M, Divina F, Vázquez Noguera JL. Computational Inference of Gene Co-Expression Networks for the identification of Lung Carcinoma Biomarkers: An Ensemble Approach. Genes. 2019; 10(12):962. https://doi.org/10.3390/genes10120962 
 
