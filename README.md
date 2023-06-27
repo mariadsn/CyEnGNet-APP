@@ -1,6 +1,6 @@
 # CyEnGNet: *Cy*toscape *En*semble *G*ene *N*etwork
 
-EnGNet proposes a new approach for the reconstruction of large gene coexpression networks. We present the CyEnGNet-app for Cytoscape, which is an improved implementation of the EnGNet methodology presented in the work by <a href="https://www.mdpi.com/2073-4425/10/12/962">Delgadp-Chaves et al. 2019</a>. This method is able to overcome the limitations of a single information-theoretic approach thanks to an ensemble strategy. Moreover, it performs topological optimization and has been integrated into Cytoscape to enhance tool accessibility for non-technical users and facilitate visual analysis of the results. 
+EnGNet proposes a new approach for the reconstruction of large gene coexpression networks. We present the CyEnGNet-app for Cytoscape, which is an improved implementation of the EnGNet methodology presented in the work by <a href="https://www.mdpi.com/2073-4425/10/12/962">Delgado-Chaves et al. 2019</a>. This method is able to overcome the limitations of a single information-theoretic approach thanks to an ensemble strategy. Moreover, it performs topological optimization and has been integrated into Cytoscape to enhance tool accessibility for non-technical users and facilitate visual analysis of the results. 
 
 The approach offers several relevant and distinguishing features in relation to most of the existing methods.
 * The app uses a greedy algorithm which optimises both the size and the topology of the network. 
