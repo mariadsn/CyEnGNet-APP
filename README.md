@@ -14,7 +14,7 @@ The approach offers several relevant and distinguishing features in relation to 
 First you need to install the app throug the app manager. If everything goes well, you will get a new item in the `Apps` menu called `EnGNet`.
 
 Open EnGNet from the `Apps` menu and you'll be presented the configuration dialog. Load an expression array directly from the user folder to perform the evaluation, as well as different
-threshold values such as NMI, Kendall, Spearman, adding, and Th𝛽. These files are expected to be in txt format separated by tabs at the top of the coniguration dialog.
+threshold values such as NMI, Kendall, Spearman, adding, and Th𝛽 (default values for each parameter are shown in the configuration panel). These files are expected to be in txt format separated by tabs at the top of the coniguration dialog.
 
 ![EnGNet result](imagen/Fig2-inputParameter.png)
 
