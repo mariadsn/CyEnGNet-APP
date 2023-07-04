@@ -77,19 +77,19 @@ public class ConfigurationDialog extends javax.swing.JDialog {
 
         jLabel1.setText("NMI:");
         jLabel1.setToolTipText("Normalized Mutual Information (NMI) measures. the NMI is able to detect linear and also non-linear dependencies between genes. Recomended: 0.6  ");
-        nmi.setModel(new javax.swing.SpinnerNumberModel(0.6, 0.0, 1.00, 0.1));
+        nmi.setModel(new javax.swing.SpinnerNumberModel(0.6, 0.0, 1.00, 0.01));
         
         jLabel2.setText("Kendall:");
         jLabel2.setToolTipText("Kendall coefficient. Kendall’s measure is also able to detect linear dependencies. Recomended: 0.7 ");
-        kendall.setModel(new javax.swing.SpinnerNumberModel(0.7, 0.0, 1.00, 0.1));
+        kendall.setModel(new javax.swing.SpinnerNumberModel(0.7, 0.0, 1.00, 0.01));
         
         jLabel3.setText("Spearman:");
         jLabel3.setToolTipText("Spearman coefficient. The Spearman coefficient is able to detect linear dependencies between two genes unaffected by data distribution. Recomended: 0.7");
-        spearman.setModel(new javax.swing.SpinnerNumberModel(0.7, 0.0, 1.00, 0.1));
+        spearman.setModel(new javax.swing.SpinnerNumberModel(0.7, 0.0, 1.00, 0.01));
         
         jLabel4.setText("Significant threshold:");
         jLabel4.setToolTipText("To prune de tree. Recomended: 0.7 ");
-        averageT.setModel(new javax.swing.SpinnerNumberModel(0.7, 0.0, 1.00, 0.1));
+        averageT.setModel(new javax.swing.SpinnerNumberModel(0.7, 0.0, 1.00, 0.01));
 
         jLabel5.setText("Thβ:");
         jLabel5.setToolTipText("Thβ threshold. This threshold is a user set parameter, which is employed to determine the biological relevance level of the removed edges. Recomended: 3");
