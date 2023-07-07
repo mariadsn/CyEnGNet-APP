@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Created-By: Apache Maven Bundle Plugin
 Tool: Bnd-1.15.0
-Bnd-LastModified: 1688719519400
+Bnd-LastModified: 1688719960217
 Import-Package: Jama;resolution:=optional,javax.accessibility;resolution
  :=optional,javax.imageio;resolution:=optional,javax.swing;resolution:=o
  ptional,javax.swing.border;resolution:=optional,javax.swing.event;resol
