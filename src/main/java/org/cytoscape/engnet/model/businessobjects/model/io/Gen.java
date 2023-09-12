@@ -3,36 +3,36 @@ package org.cytoscape.engnet.model.businessobjects.model.io;
 import java.util.ArrayList;
 
 public class Gen {
-   private String nombre;
-   private ArrayList<Float> experimentos;
+   private String name;
+   private ArrayList<Float> experiments;
 
-   public Gen(String nombre) {
-      this.nombre = nombre;
-      this.experimentos = new ArrayList();
+   public Gen(String name) {
+      this.name = name;
+      this.experiments = new ArrayList();
    }
 
    public Gen(Gen g) {
-      this.setExperimentos(g.getExperimentos());
-      this.setNombre(g.getNombre());
+      this.setExperiments(g.getExperiments());
+      this.setName(g.getName());
    }
 
-   public String getNombre() {
-      return this.nombre;
+   public String getName() {
+      return this.name;
    }
 
-   public void setNombre(String nombre) {
-      this.nombre = nombre;
+   public void setName(String name) {
+      this.name = name;
    }
 
-   public ArrayList<Float> getExperimentos() {
-      return this.experimentos;
+   public ArrayList<Float> getExperiments() {
+      return this.experiments;
    }
 
-   public void setExperimentos(ArrayList<Float> experimentos) {
-      this.experimentos = experimentos;
+   public void setExperiments(ArrayList<Float> experiments) {
+      this.experiments = experiments;
    }
 
-   public void addExperimento(Float a) {
-      this.getExperimentos().add(a);
+   public void addExperiment(Float a) {
+      this.getExperiments().add(a);
    }
 }

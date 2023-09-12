@@ -15,8 +15,8 @@ import org.cytoscape.work.TaskManager;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.engnet.controller.utils.CySwing2;
 import org.cytoscape.engnet.model.businessobjects.EnGNetResult;
-import org.cytoscape.engnet.model.businessobjects.model.Arco;
-import org.cytoscape.engnet.model.businessobjects.model.Grafo;
+import org.cytoscape.engnet.model.businessobjects.model.Arch;
+import org.cytoscape.engnet.model.businessobjects.model.Graph;
 import org.cytoscape.engnet.model.businessobjects.model.io.Gen;
 import org.cytoscape.engnet.model.businessobjects.model.performance.GRN;
 import org.cytoscape.model.CyNetworkFactory;
@@ -71,7 +71,7 @@ public final class NetworkController {
     private CyNetwork network;
     private CyNetworkView networkView;
     private Map<String, CyNode> nodes;
-    private Grafo redFinal;
+    private Graph finalNetwork;
     private ArrayList<Gen> genes;
     private GRN g;
     
@@ -107,16 +107,16 @@ public final class NetworkController {
 	    	network.getRow(network).set(CyNetwork.NAME, "EnGNet network");
 	    	
 	    	ArrayList<String> genes = new ArrayList<>();
-    		Iterator<Arco> it = result.getRedFinal().getAristas().iterator();
+    		Iterator<Arch> it = result.getFinalNetwork().getEdges().iterator();
     		while(it.hasNext()) {
-    			Arco Arco = (Arco)it.next();
-    			String nodoInit = Arco.getInicial();
-    			String nodoFin = Arco.getTerminal();
-    			if (!genes.contains(nodoInit)) {
-    		        genes.add(nodoInit);
+    			Arch Arco = (Arch)it.next();
+    			String nodeInit = Arco.getInitial();
+    			String nodeEnd = Arco.getTerminal();
+    			if (!genes.contains(nodeInit)) {
+    		        genes.add(nodeInit);
     		    }
-    			if (!genes.contains(nodoFin)) {
-    				genes.add(nodoFin);
+    			if (!genes.contains(nodeEnd)) {
+    				genes.add(nodeEnd);
     			}
     		}
     		
@@ -153,15 +153,15 @@ public final class NetworkController {
 	    	
 	    	Set<String> existingEdges = new HashSet<>();
 	    	
-	    	for (Arco edge: result.getRedFinal().getAristas()) {
-        		String sourceName = edge.getInicial();
+	    	for (Arch edge: result.getFinalNetwork().getEdges()) {
+        		String sourceName = edge.getInitial();
         		String targetName = edge.getTerminal();
         		String edgeKey = sourceName + "_" + targetName;
         		
         		if (!existingEdges.contains(edgeKey)) {
-        			CyNode source = nodes.get(edge.getInicial());
+        			CyNode source = nodes.get(edge.getInitial());
             		CyNode target = nodes.get(edge.getTerminal());
-            		double weight = edge.getPeso();
+            		double weight = edge.getWeight();
             		CyEdge cyEdge = network.addEdge(source, target, false);
             		existingEdges.add(edgeKey);
             		CyRow row = network.getRow(cyEdge);
@@ -170,12 +170,12 @@ public final class NetworkController {
             		row.set(WeightColumn, weight);
             		
             		int contador = 0;
-            		Iterator<Arco> id = result.getg().getArcos().iterator();
+            		Iterator<Arch> id = result.getg().getArches().iterator();
             		while(id.hasNext()) {
-            			Arco Arco = (Arco)id.next();
-            			String nodoInit = Arco.getInicial();
-            			String nodoFin = Arco.getTerminal();
-            			if (sourceName.equals(nodoInit) && targetName.equals(nodoFin)) {
+            			Arch Arco = (Arch)id.next();
+            			String nodeInit = Arco.getInitial();
+            			String nodeEnd = Arco.getTerminal();
+            			if (sourceName.equals(nodeInit) && targetName.equals(nodeEnd)) {
             				String arcoString = Arco.toStringESM();
             				String[] elementos = arcoString.split("\t");
             				String nmiValue = elementos[2];

@@ -9,18 +9,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.cytoscape.engnet.model.businessobjects.EnGNetResult;
+import org.cytoscape.engnet.model.businessobjects.MathematicalMeasurement.Correlation;
+import org.cytoscape.engnet.model.businessobjects.MathematicalMeasurement.IMathematicalMeasurement;
+import org.cytoscape.engnet.model.businessobjects.MathematicalMeasurement.NMI;
 import org.cytoscape.engnet.model.businessobjects.exceptions.AnalysisErrorException;
-import org.cytoscape.engnet.model.businessobjects.logic.AlgoritmoKruskal;
-import org.cytoscape.engnet.model.businessobjects.medidaMatematica.Correlacion;
-import org.cytoscape.engnet.model.businessobjects.medidaMatematica.IMedidaMatematica;
-import org.cytoscape.engnet.model.businessobjects.medidaMatematica.NMI;
-import org.cytoscape.engnet.model.businessobjects.model.Arco;
-import org.cytoscape.engnet.model.businessobjects.model.Grafo;
-import org.cytoscape.engnet.model.businessobjects.model.Nodo;
-import org.cytoscape.engnet.model.businessobjects.model.io.DatosGenes;
+import org.cytoscape.engnet.model.businessobjects.logic.KruskalAlgorithm;
+import org.cytoscape.engnet.model.businessobjects.model.Arch;
+import org.cytoscape.engnet.model.businessobjects.model.Graph;
+import org.cytoscape.engnet.model.businessobjects.model.Node;
+import org.cytoscape.engnet.model.businessobjects.model.io.GenesData;
 import org.cytoscape.engnet.model.businessobjects.model.io.Gen;
 import org.cytoscape.engnet.model.businessobjects.model.performance.GRN;
-import org.cytoscape.engnet.model.businessobjects.utils.Constantes;
+import org.cytoscape.engnet.model.businessobjects.utils.Constants;
 import org.cytoscape.engnet.model.businessobjects.utils.ProgressMonitor;
 
 
@@ -49,23 +49,23 @@ public class EnGNet {
         return isInterrupted;
     }
 
-    public EnGNetResult execute(File sPath, String sPathEntrada, double fNMI, double fKendall, double fSpearman, double fAverage, int fThb) {
+    public EnGNetResult execute(File sPath, String sPathEntry, double fNMI, double fKendall, double fSpearman, double fAverage, int fThb) {
 
         try {
         	// 1) Execute EnGNet
-        	DatosGenes dg = new DatosGenes();
-        	dg.leerFicheroDeEntrada(sPathEntrada);
-        	GRN g = generarGrafoCompleto(dg, fKendall, fSpearman, fNMI);
-        	ArrayList<Gen> genes = new ArrayList(dg.getListaGenes());
-        	g.volcarAFichero(sPath + System.getProperty("file.separator") + "grafoCompleto.txt");
-        	Grafo gc = new Grafo(g);
-        	Grafo grafoPredominante = AlgoritmoKruskal.aplicarKruskal(gc);
-        	Grafo redFinal = anadirRelacionesGRN(grafoPredominante, dg, fAverage, fThb, fKendall, fSpearman, fNMI);
+        	GenesData dg = new GenesData();
+        	dg.readInputFile(sPathEntry);
+        	GRN g = generateCompleteNetwork(dg, fKendall, fSpearman, fNMI);
+        	ArrayList<Gen> genes = new ArrayList(dg.getGenesList());
+        	g.dumpToFile(sPath + System.getProperty("file.separator") + "completeNetwork.txt");
+        	Graph gc = new Graph(g);
+        	Graph predominantNetwork = KruskalAlgorithm.applyKruskal(gc);
+        	Graph finalNetwork = addGRNrelations(predominantNetwork, dg, fAverage, fThb, fKendall, fSpearman, fNMI);
         	//ArrayList<Gen> genes = new ArrayList(redFinal.getNodos());
-        	redFinal.volcarAFichero(sPath + System.getProperty("file.separator") + "finalNetwork.txt");    	
+        	finalNetwork.dumpToFile(sPath + System.getProperty("file.separator") + "finalNetwork.txt");    	
         	
         	
-		return new EnGNetResult(fNMI,fKendall,fSpearman, fAverage,fThb,redFinal,genes,g);
+		return new EnGNetResult(fNMI,fKendall,fSpearman, fAverage,fThb,finalNetwork,genes,g);
         } catch (AnalysisErrorException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -75,48 +75,48 @@ public class EnGNet {
         }
     }
 
-    private static GRN generarGrafoCompleto(DatosGenes dg, double fKendall, double fSpearman, double fNMI) {
+    private static GRN generateCompleteNetwork(GenesData dg, double fKendall, double fSpearman, double fNMI) {
         GRN g = GRN.getInstance();
-        IMedidaMatematica medida3 = null;
-        IMedidaMatematica medida1 = new NMI();
-        IMedidaMatematica medida2 = new Correlacion(Constantes.KENDALL);
-        medida3 = new Correlacion(Constantes.SPEARMAN);
-        int numTotal = dg.getListaGenes().size();
-        ArrayList<Gen> lista = new ArrayList(dg.getListaGenes());
+        IMathematicalMeasurement measure3 = null;
+        IMathematicalMeasurement measure1 = new NMI();
+        IMathematicalMeasurement measure2 = new Correlation(Constants.KENDALL);
+        measure3 = new Correlation(Constants.SPEARMAN);
+        int numTotal = dg.getGenesList().size();
+        ArrayList<Gen> iList = new ArrayList(dg.getGenesList());
 
         for(int i = 0; i < numTotal - 1; ++i) {
-           Gen gene1 = (Gen)lista.get(i);
+           Gen gene1 = (Gen)iList.get(i);
            if (i % 1000 == 0) {
         	   //CySwing2.displayPopUpMessage("Gene:" + gene1.getNombre() + " number: " + i + " of: " + numTotal);
            }
 
            for(int j = i + 1; j < numTotal; ++j) {
-              Gen gene2 = (Gen)lista.get(j);
+              Gen gene2 = (Gen)iList.get(j);
               int cont = 0;
-              if (!gene1.getNombre().equals(gene2.getNombre())) {
-                 float valor1 = Math.abs(medida1.relacionGenGen(gene1, gene2));
-                 float valor2 = Math.abs(medida2.relacionGenGen(gene1, gene2));
-                 float valor3 = Math.abs(medida3.relacionGenGen(gene1, gene2));
-                 if (valor2 > fKendall) {
+              if (!gene1.getName().equals(gene2.getName())) {
+                 float value1 = Math.abs(measure1.genGenRelationship(gene1, gene2));
+                 float value2 = Math.abs(measure2.genGenRelationship(gene1, gene2));
+                 float value3 = Math.abs(measure3.genGenRelationship(gene1, gene2));
+                 if (value2 > fKendall) {
                     ++cont;
                  }
 
-                 if (valor3 > fSpearman) {
+                 if (value3 > fSpearman) {
                     ++cont;
                  }
 
-                 if (valor1 >= fNMI) {
+                 if (value1 >= fNMI) {
                     ++cont;
                  }
 
                  if (cont >= 2) {
-                    g.addArco(new Arco(gene1.getNombre(), gene2.getNombre(), valor1, valor2, valor3));
-                    if (!g.getNodos().contains(gene1.getNombre())) {
-                       g.addNodo(gene1.getNombre());
+                    g.addArch(new Arch(gene1.getName(), gene2.getName(), value1, value2, value3));
+                    if (!g.getNodes().contains(gene1.getName())) {
+                       g.addNode(gene1.getName());
                     }
 
-                    if (!g.getNodos().contains(gene2.getNombre())) {
-                       g.addNodo(gene2.getNombre());
+                    if (!g.getNodes().contains(gene2.getName())) {
+                       g.addNode(gene2.getName());
                     }
                  }
               }
@@ -126,53 +126,53 @@ public class EnGNet {
         return g;
      }
 
-    private static Grafo anadirRelacionesGRN(Grafo grafoPredominante, DatosGenes dg, double fAverage, int fThb ,double fKendall, double fSpearman, double fNMI) {
-        GRN g = new GRN(grafoPredominante);
+    private static Graph addGRNrelations(Graph predominantNetwork, GenesData dg, double fAverage, int fThb ,double fKendall, double fSpearman, double fNMI) {
+        GRN g = new GRN(predominantNetwork);
         double umbralCor = fAverage;
         int hubThr = fThb;
         if (hubThr < 0) {
            hubThr = 3;
         }
 
-        IMedidaMatematica medida1 = new NMI();
-        IMedidaMatematica medida2 = new Correlacion(Constantes.KENDALL);
-        IMedidaMatematica medida3 = new Correlacion(Constantes.SPEARMAN);
-        Hashtable<String, Nodo> nodos = grafoPredominante.getNodos();
+        IMathematicalMeasurement measure1 = new NMI();
+        IMathematicalMeasurement measure2 = new Correlation(Constants.KENDALL);
+        IMathematicalMeasurement measure3 = new Correlation(Constants.SPEARMAN);
+        Hashtable<String, Node> nodes = predominantNetwork.getNodes();
         int k = 1;
-        ArrayList<Gen> lista = new ArrayList(dg.getListaGenes());
-        int numTotal = dg.getListaGenes().size();
+        ArrayList<Gen> iList = new ArrayList(dg.getGenesList());
+        int numTotal = dg.getGenesList().size();
 
         for(int i = 0; i < numTotal - 1; ++i) {
-           Gen gene1 = (Gen)lista.get(i);
-           if (nodos.containsKey(gene1.getNombre()) && ((Nodo)nodos.get(gene1.getNombre())).getEnlacesExistentes() > hubThr) {
+           Gen gene1 = (Gen)iList.get(i);
+           if (nodes.containsKey(gene1.getName()) && ((Node)nodes.get(gene1.getName())).getExistingLinks() > hubThr) {
         	   //CySwing2.displayPopUpMessage("Adding relations to relevant node " + k + " : " + gene1.getNombre());
 
               for(int j = i + 1; j < numTotal; ++j) {
-                 Gen gene2 = (Gen)lista.get(j);
+                 Gen gene2 = (Gen)iList.get(j);
                  int cont = 0;
-                 if (!gene1.getNombre().equals(gene2.getNombre())) {
-                    float valor1 = Math.abs(medida1.relacionGenGen(gene1, gene2));
-                    float valor2 = Math.abs(medida2.relacionGenGen(gene1, gene2));
-                    float valor3 = Math.abs(medida3.relacionGenGen(gene1, gene2));
+                 if (!gene1.getName().equals(gene2.getName())) {
+                    float value1 = Math.abs(measure1.genGenRelationship(gene1, gene2));
+                    float value2 = Math.abs(measure2.genGenRelationship(gene1, gene2));
+                    float value3 = Math.abs(measure3.genGenRelationship(gene1, gene2));
                     
-                     if (valor2 > fKendall) {
+                     if (value2 > fKendall) {
                      ++cont;
                      }
 
-                     if (valor3 > fSpearman) {
+                     if (value3 > fSpearman) {
                      ++cont;
                      }
 
-                     if (valor1 >= fNMI) {
+                     if (value1 >= fNMI) {
                      ++cont;
                      }
 
                      if (cont >= 2) { 
-                        float media = (valor1 + valor2 + valor3) / 3.0F;
-                        if (media >= umbralCor) {
-                           g.addArco(new Arco(gene1.getNombre(), gene2.getNombre(), media));
-                           if (!g.getNodos().contains(gene2.getNombre())) {
-                              g.addNodo(gene2.getNombre());
+                        float average = (value1 + value2 + value3) / 3.0F;
+                        if (average >= umbralCor) {
+                           g.addArch(new Arch(gene1.getName(), gene2.getName(), average));
+                           if (!g.getNodes().contains(gene2.getName())) {
+                              g.addNode(gene2.getName());
                            }
                         }
                      }
@@ -183,7 +183,7 @@ public class EnGNet {
            ++k;
         }
 
-        return grafoPredominante;
+        return predominantNetwork;
      }
 
 }

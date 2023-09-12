@@ -8,12 +8,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-import org.cytoscape.engnet.model.businessobjects.model.Arco;
-import org.cytoscape.engnet.model.businessobjects.model.Grafo;
+import org.cytoscape.engnet.model.businessobjects.model.Arch;
+import org.cytoscape.engnet.model.businessobjects.model.Graph;
 
 public class GRN {
-   private ArrayList<String> nodos = new ArrayList();
-   private ArrayList<Arco> Arcos = new ArrayList();
+   private ArrayList<String> nodes = new ArrayList();
+   private ArrayList<Arch> Arches = new ArrayList();
    private static GRN instance = null;
    private double nmiValue;
    private double kendallValue;
@@ -22,29 +22,29 @@ public class GRN {
    public GRN() {
    }
 
-   public GRN(Grafo g) {
-      this.nodos = g.getNombres();
-      this.Arcos = g.getAristas();
+   public GRN(Graph g) {
+      this.nodes = g.getNames();
+      this.Arches = g.getEdges();
    }
 
    public static GRN getInstance() {
       return instance == null ? new GRN() : instance;
    }
 
-   public ArrayList<String> getNodos() {
-      return this.nodos;
+   public ArrayList<String> getNodes() {
+      return this.nodes;
    }
 
-   public void setNodos(ArrayList<String> nodos) {
-      this.nodos = nodos;
+   public void setNodes(ArrayList<String> nodes) {
+      this.nodes = nodes;
    }
 
-   public ArrayList<Arco> getArcos() {
-      return this.Arcos;
+   public ArrayList<Arch> getArches() {
+      return this.Arches;
    }
 
-   public void setArcos(ArrayList<Arco> Arcos) {
-      this.Arcos = Arcos;
+   public void setArches(ArrayList<Arch> Arches) {
+      this.Arches = Arches;
    }
    
    public double getNMIValue() {
@@ -70,67 +70,67 @@ public class GRN {
 	   this.spearmanValue = spearmanValue;
    }
 
-   public void addArcos(HashSet<Arco> Arcos) {
-      this.Arcos.addAll(Arcos);
+   public void addArches(HashSet<Arch> Arches) {
+      this.Arches.addAll(Arches);
    }
 
-   public void addNodos(HashSet<String> nodos) {
-      this.nodos.addAll(nodos);
+   public void addNodes(HashSet<String> nodes) {
+      this.nodes.addAll(nodes);
    }
 
-   public void addArco(Arco a) {
-      this.Arcos.add(a);
+   public void addArch(Arch a) {
+      this.Arches.add(a);
    }
 
-   public void volcarAFichero(String path) throws IOException {
-      System.out.println("Escribiendo fichero grafo a Fichero");
-      System.out.println("Ruta del fichero: " + path);
-      System.out.println("Nodos del grafo: " + this.nodos.size());
-      System.out.println("Arcos del grafo: " + this.Arcos.size());
+   public void dumpToFile(String path) throws IOException {
+      System.out.println("Writing network file to File");
+      System.out.println("File Path: " + path);
+      System.out.println("Networks nodes: " + this.nodes.size());
+      System.out.println("Networks arches: " + this.Arches.size());
       FileWriter filew = new FileWriter(path);
       PrintWriter pw = new PrintWriter(filew);
-      Iterator<Arco> it = this.Arcos.iterator();
+      Iterator<Arch> it = this.Arches.iterator();
       int j = 0;
-      pw.println("Origen\tDestino\tPeso1\tPeso2\tPeso3");
+      pw.println("Origin\tDestination\tWeight1\tWeight2\tWeight3");
 
       while(it.hasNext()) {
-         Arco Arco = (Arco)it.next();
-         pw.println(Arco.toStringESM());
+         Arch Arch = (Arch)it.next();
+         pw.println(Arch.toStringESM());
          ++j;
       }
 
       pw.close();
    }
 
-   public void volcarAFicheroNormal(String path) throws IOException {
-      System.out.println("Escribiendo fichero grafo a Fichero");
-      System.out.println("Ruta del fichero: " + path);
-      System.out.println("Nodos del grafo: " + this.nodos.size());
-      System.out.println("Arcos del grafo: " + this.Arcos.size());
+   public void dumpToNormalFile(String path) throws IOException {
+      System.out.println("Writing network file to File");
+      System.out.println("File Path: " + path);
+      System.out.println("Networks nodes: " + this.nodes.size());
+      System.out.println("Networks arches: " + this.Arches.size());
       FileWriter filew = new FileWriter(path);
       PrintWriter pw = new PrintWriter(filew);
-      Iterator<Arco> it = this.Arcos.iterator();
+      Iterator<Arch> it = this.Arches.iterator();
       int j = 0;
-      pw.println("Origen\tDestino\tPeso1\tPeso2\tPeso3");
+      pw.println("Origin\tDestination\tWeight1\tWeight2\tWeight3");
 
       while(it.hasNext()) {
-         Arco Arco = (Arco)it.next();
-         pw.println(Arco.toString());
+         Arch Arch = (Arch)it.next();
+         pw.println(Arch.toString());
          ++j;
       }
 
       pw.close();
    }
 
-   public void grafo2Tgf(String path) throws IOException {
-      System.out.println("Escribiendo fichero tgf");
-      System.out.println("Ruta del fichero: " + path);
-      System.out.println("Nodos del grafo: " + this.nodos.size());
-      System.out.println("Arcos del grafo: " + this.Arcos.size());
+   public void graph2Tgf(String path) throws IOException {
+      System.out.println("Writing file tgf");
+      System.out.println("File Path: " + path);
+      System.out.println("Networks nodes: " + this.nodes.size());
+      System.out.println("Networks arches: " + this.Arches.size());
       TreeMap<String, Integer> aris = new TreeMap();
       FileWriter filew = new FileWriter(path);
       PrintWriter pw = new PrintWriter(filew);
-      Iterator<String> it = this.nodos.iterator();
+      Iterator<String> it = this.nodes.iterator();
 
       for(int j = 0; it.hasNext(); ++j) {
          String gname = (String)it.next();
@@ -139,11 +139,11 @@ public class GRN {
       }
 
       pw.println("#");
-      Iterator itA = this.Arcos.iterator();
+      Iterator itA = this.Arches.iterator();
 
       while(itA.hasNext()) {
-         Arco a = (Arco)itA.next();
-         Integer ori = (Integer)aris.get(a.getInicial());
+         Arch a = (Arch)itA.next();
+         Integer ori = (Integer)aris.get(a.getInitial());
          Integer dest = (Integer)aris.get(a.getTerminal());
          pw.println(ori + " " + dest);
       }
@@ -151,16 +151,16 @@ public class GRN {
       filew.close();
    }
 
-   public void addNodo(String nodo) {
-      this.getNodos().add(nodo);
+   public void addNode(String node) {
+      this.getNodes().add(node);
    }
 
-   private boolean isPresent(Arco a) {
-      Iterator it = this.getArcos().iterator();
+   private boolean isPresent(Arch a) {
+      Iterator it = this.getArches().iterator();
 
       while(it.hasNext()) {
-         Arco a2 = (Arco)it.next();
-         if (a2.igualesAsociacion(a)) {
+         Arch a2 = (Arch)it.next();
+         if (a2.equalPartnership(a)) {
             return true;
          }
       }
@@ -169,13 +169,13 @@ public class GRN {
    }
 
    public void removeDuplicatesEdges() {
-      for(int i = 0; i < this.getArcos().size() - 1; ++i) {
-         Arco a1 = (Arco)this.getArcos().get(i);
+      for(int i = 0; i < this.getArches().size() - 1; ++i) {
+         Arch a1 = (Arch)this.getArches().get(i);
 
-         for(int j = i + 1; j < this.getArcos().size(); ++j) {
-            Arco a2 = (Arco)this.getArcos().get(j);
-            if (a1.igualesAsociacion(a2)) {
-               this.getArcos().remove(j);
+         for(int j = i + 1; j < this.getArches().size(); ++j) {
+            Arch a2 = (Arch)this.getArches().get(j);
+            if (a1.equalPartnership(a2)) {
+               this.getArches().remove(j);
                System.out.println("edge " + a2.toString() + " removed");
             }
          }

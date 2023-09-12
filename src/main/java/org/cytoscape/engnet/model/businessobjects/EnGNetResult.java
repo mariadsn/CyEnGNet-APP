@@ -3,7 +3,7 @@ package org.cytoscape.engnet.model.businessobjects;
 
 import java.util.ArrayList;
 
-import org.cytoscape.engnet.model.businessobjects.model.Grafo;
+import org.cytoscape.engnet.model.businessobjects.model.Graph;
 import org.cytoscape.engnet.model.businessobjects.model.io.Gen;
 import org.cytoscape.engnet.model.businessobjects.model.performance.GRN;
 
@@ -14,24 +14,24 @@ public class EnGNetResult {
     private final double fSpearman;
     private final double fAverage;
     private final float fThb;
-	public final Grafo redFinal;
+	public final Graph finalNetwork;
 	private ArrayList<Gen> genes;
 	private GRN g;
 
     
-    public EnGNetResult(double fNMI, double fKendall, double fSpearman, double fAverage, int fThb, Grafo redFinal, ArrayList<Gen> genes, GRN g) {
+    public EnGNetResult(double fNMI, double fKendall, double fSpearman, double fAverage, int fThb, Graph finalNetwork, ArrayList<Gen> genes, GRN g) {
         this.fNMI = fNMI;
         this.fKendall = fKendall;
         this.fSpearman = fSpearman;
         this.fAverage = fAverage;
         this.fThb = fThb;
-        this.redFinal = redFinal;
+        this.finalNetwork = finalNetwork;
         this.genes = genes;
         this.g = g;
     }
     
-    public Grafo getRedFinal() {
-    	return redFinal;
+    public Graph getFinalNetwork() {
+    	return finalNetwork;
     }   
     
 
