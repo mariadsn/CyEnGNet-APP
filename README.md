@@ -1,6 +1,6 @@
 # CyEnGNet: *Cy*toscape *En*semble *G*ene *N*etwork
 
-EnGNet proposes a new approach for the reconstruction of large gene coexpression networks. We present the CyEnGNet-app for Cytoscape, which is an improved implementation of the EnGNet methodology presented in the work by <a href="https://www.mdpi.com/2073-4425/10/12/962">Delgado-Chaves et al. 2019</a>. This method is able to overcome the limitations of a single information-theoretic approach thanks to an ensemble strategy. Moreover, it performs topological optimization and has been integrated into Cytoscape to enhance tool accessibility for non-technical users and facilitate visual analysis of the results. 
+EnGNet proposes a new approach for the reconstruction of large gene coexpression networks. We present the CyEnGNet-app for Cytoscape, which is an improved implementation of the EnGNet methodology presented in the work by <a href="https://www.mdpi.com/1099-4300/21/12/1139">Delgado-Chaves et al. 2019</a>. This method is able to overcome the limitations of a single information-theoretic approach thanks to an ensemble strategy. Moreover, it performs topological optimization and has been integrated into Cytoscape to enhance tool accessibility for non-technical users and facilitate visual analysis of the results. 
 
 The approach offers several relevant and distinguishing features in relation to most of the existing methods.
 * The app uses a greedy algorithm which optimises both the size and the topology of the network. 
@@ -27,7 +27,7 @@ The network has a basic style applied to facilitate visual exploration.
 **Note:** when downloading the repository you must modify the pom.xml file in the path to the JavaMI.java and jsc.java files by adding your own path.
 
 ## Reference
-Delgado-Chaves FM, Gómez-Vela F, García-Torres M, Divina F, Vázquez Noguera JL. Computational Inference of Gene Co-Expression Networks for the identification of Lung Carcinoma Biomarkers: An Ensemble Approach. Genes. 2019; 10(12):962. https://doi.org/10.3390/genes10120962 
+Gómez-Vela, F.; Delgado-Chaves, F.M.; Rodríguez-Baena, D.S.; García-Torres, M.; Divina, F. Ensemble and Greedy Approach for the Reconstruction of Large Gene Co-Expression Networks. Entropy 2019, 21, 1139. https://doi.org/10.3390/e21121139  
 
 ## Cite us
 Under revision
