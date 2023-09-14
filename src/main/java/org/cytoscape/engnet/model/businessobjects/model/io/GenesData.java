@@ -78,7 +78,7 @@ public class GenesData {
 
       try {
          FileReader file = new FileReader(path);
-         FileWriter filew = new FileWriter(path + "Salida.txt");
+         FileWriter filew = new FileWriter(path + "output.txt");
          PrintWriter pw = new PrintWriter(filew);
          BufferedReader br = new BufferedReader(file);
          String[] iList = null;

@@ -133,22 +133,22 @@ public final class NetworkController {
 	    	try {
 	    		edgeTable.createColumn(NMIColumn, String.class, false);
 	    	}catch (IllegalArgumentException ex){
-	    		// la columna ya existe, no es necesario hacer nada
+	    		
 	    	}
 	    	try {
 	    		edgeTable.createColumn(KendallColumn, String.class, false);
 	    	}catch (IllegalArgumentException ex){
-	    		// la columna ya existe, no es necesario hacer nada
+	    		
 	    	}
 	    	try {
 	    		edgeTable.createColumn(SpearmanColumn, String.class, false);
 	    	}catch (IllegalArgumentException ex){
-	    		// la columna ya existe, no es necesario hacer nada
+	    		
 	    	}
 	    	try {
 	    		edgeTable.createColumn(WeightColumn, Double.class, false);
 	    	}catch (IllegalArgumentException ex) {
-	    		// la columna ya existe, no es necesario hacer nada
+	    		
 	    	}
 	    	
 	    	Set<String> existingEdges = new HashSet<>();

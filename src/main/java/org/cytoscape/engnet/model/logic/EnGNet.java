@@ -86,10 +86,6 @@ public class EnGNet {
 
         for(int i = 0; i < numTotal - 1; ++i) {
            Gen gene1 = (Gen)iList.get(i);
-           if (i % 1000 == 0) {
-        	   //CySwing2.displayPopUpMessage("Gene:" + gene1.getNombre() + " number: " + i + " of: " + numTotal);
-           }
-
            for(int j = i + 1; j < numTotal; ++j) {
               Gen gene2 = (Gen)iList.get(j);
               int cont = 0;
@@ -145,8 +141,6 @@ public class EnGNet {
         for(int i = 0; i < numTotal - 1; ++i) {
            Gen gene1 = (Gen)iList.get(i);
            if (nodes.containsKey(gene1.getName()) && ((Node)nodes.get(gene1.getName())).getExistingLinks() > hubThr) {
-        	   //CySwing2.displayPopUpMessage("Adding relations to relevant node " + k + " : " + gene1.getNombre());
-
               for(int j = i + 1; j < numTotal; ++j) {
                  Gen gene2 = (Gen)iList.get(j);
                  int cont = 0;
