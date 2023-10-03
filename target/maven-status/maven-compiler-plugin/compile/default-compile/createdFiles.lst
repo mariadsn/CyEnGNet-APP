@@ -11,14 +11,12 @@ org/cytoscape/engnet/model/businessobjects/model/Graph.class
 org/cytoscape/engnet/model/businessobjects/logic/KruskalAlgorithm.class
 org/cytoscape/engnet/view/configurationDialogs/ConfigurationDialog$2.class
 org/cytoscape/engnet/EnGNet.class
-org/cytoscape/engnet/model/businessobjects/logic/GeneratesCompleteNetwork.class
 org/cytoscape/engnet/model/businessobjects/MathematicalMeasurement/SymmetricalUncertainty.class
 org/cytoscape/engnet/model/businessobjects/model/io/GenesData.class
 org/cytoscape/engnet/controller/actions/MenuAction.class
 org/cytoscape/engnet/controller/tasks/ShowResultsTask.class
 org/cytoscape/engnet/controller/tasks/ApplyVisualStyleTask.class
 org/cytoscape/engnet/model/businessobjects/model/io/FichExceptions.class
-org/cytoscape/engnet/model/businessobjects/exceptions/DatabaseParsingException.class
 org/cytoscape/engnet/view/configurationDialogs/ConfigurationDialog.class
 org/cytoscape/engnet/model/businessobjects/model/Arch.class
 org/cytoscape/engnet/model/businessobjects/model/Node.class

@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.cytoscape.engnet</groupId>
-    <artifactId>engnet</artifactId>
+    <artifactId>cyengnet</artifactId>
     <version>1.3.0</version>
     <packaging>bundle</packaging>
 
-    <name>EnGNet</name>
+    <name>CyEnGNet</name>
 
     <properties>
         <bundle.symbolicName>org.cytoscape.engnet</bundle.symbolicName>
