@@ -2,6 +2,8 @@ package org.cytoscape.engnet.view.configurationDialogs;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JDialog;
 
 import org.cytoscape.engnet.controller.tasks.ExecuteEnGNetTask;
 import org.cytoscape.engnet.controller.utils.CySwing2;
@@ -12,9 +14,13 @@ import org.cytoscape.work.TaskManager;
 public class ConfigurationDialog extends javax.swing.JDialog {
     private final TaskManager taskManager;
     private String sPath;
+    private String oPath; 
     private File currentFolder;
+    private File outputFolderPath; 
     private String dataFilePath;
+    private String folderPath; 
     
+  
     /**
      * Creates new form NewJDialog
      */
@@ -36,8 +42,10 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         label1 = new java.awt.Label();
         runEnGNetButton = new javax.swing.JButton();
         loadDatasetButton = new javax.swing.JButton();
+        readmeButton = new javax.swing.JButton(); 
         datasetsPanel = new javax.swing.JLayeredPane();
         explanationLabel = new javax.swing.JLabel();
+        explanationLabelThr = new javax.swing.JLabel();
         spearman = new javax.swing.JSpinner();
         averageT = new javax.swing.JSpinner();
         thb = new javax.swing.JSpinner();
@@ -51,59 +59,82 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         genesFileTextField = new javax.swing.JTextField();
+        folderTextField = new javax.swing.JTextField(); 
+        selectFolderButton = new javax.swing.JButton(); 
 
 
-        setTitle("EnGNet");
+        setTitle("CyEnGNet");
         setResizable(false);
         
         loadDatasetButton.setText("Dataset file");
         loadDatasetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadDatasetButtonActionPerformed(evt);
-            }
-        });
+            }});
+        
+        selectFolderButton.setText("Select Output Folder"); // R1
+        selectFolderButton.addActionListener(new java.awt.event.ActionListener() { 
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectFolderButtonActionPerformed(evt);
+            }});
+        
+        readmeButton.setText("README");
+        readmeButton.addActionListener(new java.awt.event.ActionListener() { 
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		selectReadmeButtonActionPerformed(evt);
+        	}});
         
         genesFileTextField.setBackground(new java.awt.Color(238,238,238));
         genesFileTextField.setText("Dataset file...");
         genesFileTextField.setBorder(null);
         
+        folderTextField.setBackground(new java.awt.Color(238,238,238)); 
+        folderTextField.setText("Folder path...");
+        folderTextField.setBorder(null); 
+        
         datasetsPanel.setLayer(loadDatasetButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
 
-        explanationLabel.setText("<html>Select a gene expression data file to generate network with using EnGNet. You can select each input parameter.<html>");
-        explanationLabel.setPreferredSize(new java.awt.Dimension(958, 48));
-
+        explanationLabel.setText("<html><p>Select a gene expression data file to generate co-expression network with using EnGNet. You can select each input parameter.</p><html>");
+        explanationLabel.setPreferredSize(new java.awt.Dimension(958, 60));
+ 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        
+        explanationLabelThr.setText("<html><p><b>Threshold selection:</b></p></html>");
+        explanationLabelThr.setPreferredSize(new java.awt.Dimension(150,30));
 
-        jLabel1.setText("NMI:");
-        jLabel1.setToolTipText("Normalized Mutual Information (NMI) measures. the NMI is able to detect linear and also non-linear dependencies between genes. Recomended: 0.6  ");
+        jLabel1.setText("NMI Corr.:");
+        jLabel1.setToolTipText("Normalized Mutual Information (NMI) measures threshold. The NMI is able to detect linear and also non-linear dependencies between genes. Model Range: 0.0 - 1.0");
         nmi.setModel(new javax.swing.SpinnerNumberModel(0.6, 0.0, 1.00, 0.01));
         
-        jLabel2.setText("Kendall:");
-        jLabel2.setToolTipText("Kendall coefficient. Kendall’s measure is also able to detect linear dependencies. Recomended: 0.7 ");
+        jLabel2.setText("Kendall Corr.:");
+        jLabel2.setToolTipText("Kendall correlation threshold. Kendall’s measure is also able to detect linear dependencies. Model Range: 0.0 - 1.0");
         kendall.setModel(new javax.swing.SpinnerNumberModel(0.7, 0.0, 1.00, 0.01));
         
-        jLabel3.setText("Spearman:");
-        jLabel3.setToolTipText("Spearman coefficient. The Spearman coefficient is able to detect linear dependencies between two genes unaffected by data distribution. Recomended: 0.7");
+        jLabel3.setText("Spearman Corr.:");
+        jLabel3.setToolTipText("Spearman correlation threshold. The Spearman coefficient is able to detect linear dependencies between two genes unaffected by data distribution. Model Range: 0.0 - 1.0");
         spearman.setModel(new javax.swing.SpinnerNumberModel(0.7, 0.0, 1.00, 0.01));
         
-        jLabel4.setText("Significant threshold:");
-        jLabel4.setToolTipText("To prune de tree. Recomended: 0.7 ");
+        jLabel4.setText("Prune threshold:");
+        jLabel4.setToolTipText("Nodes or connections with values lower than the threshold are removed during this process. Model Range: 0.0 - 1.0");
         averageT.setModel(new javax.swing.SpinnerNumberModel(0.7, 0.0, 1.00, 0.01));
 
-        jLabel5.setText("Thβ:");
-        jLabel5.setToolTipText("Thβ threshold. This threshold is a user set parameter, which is employed to determine the biological relevance level of the removed edges. Recomended: 3");
+        jLabel5.setText("Hub threshold:");
+        jLabel5.setToolTipText("Hub threshold is employed to determine the biological relevance level of the removed edges. No restrictions on the model's value range.");
         thb.setModel(new javax.swing.SpinnerNumberModel(3, 0, null, 1));
         
         
         datasetsPanel.setLayer(loadDatasetButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
         datasetsPanel.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
-       
+        datasetsPanel.setLayer(selectFolderButton, javax.swing.JLayeredPane.DEFAULT_LAYER); 
         
+        datasetsPanel.setLayer(readmeButton, javax.swing.JLayeredPane.DEFAULT_LAYER); 
+         
+       
         runEnGNetButton.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         runEnGNetButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play.png"))); // NOI18N
-        runEnGNetButton.setText("Execute EnGNet");
+        runEnGNetButton.setText("Execute CyEnGNet");
         runEnGNetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 runEnGNetButtonActionPerformed(evt);
@@ -112,17 +143,18 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         
         
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout); // determina la disposicion del contenedor
+        jPanel2.setLayout(jPanel2Layout); 
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING) // each row of components should be justified 
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)  
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+            	.addContainerGap() //R1
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                	.addComponent(explanationLabelThr) //R1
+                	.addComponent(jLabel1)
                     .addComponent(jLabel4)
                     .addComponent(nmi, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(averageT, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(81, 81, 81)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -141,9 +173,11 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+            	.addContainerGap()
+            	.addComponent(explanationLabelThr)
+                .addGap(10, 10, 10) 
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                	.addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -151,7 +185,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                     .addComponent(nmi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kendall, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spearman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
@@ -166,22 +200,30 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(runEnGNetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(explanationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(loadDatasetButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(genesFileTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+        	    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        	        .addComponent(runEnGNetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        	        .addGroup(layout.createSequentialGroup()
+        	            .addContainerGap()
+        	            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        	            		.addComponent(readmeButton,javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        	                .addComponent(explanationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        	                .addGroup(layout.createSequentialGroup()
+        	                    .addComponent(selectFolderButton)
+        	                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        	                    .addComponent(folderTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+        	                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+        	                .addGroup(layout.createSequentialGroup()
+        	                    .addComponent(loadDatasetButton)
+        	                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        	                    .addComponent(genesFileTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+        	                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        	            .addContainerGap())
         );
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+            	.addComponent(readmeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(explanationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -190,11 +232,16 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                		.addComponent(selectFolderButton)
+                		.addComponent(folderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(runEnGNetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         
         genesFileTextField.setVisible(false);
+        folderTextField.setVisible(false);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -209,9 +256,11 @@ public class ConfigurationDialog extends javax.swing.JDialog {
     	int fThb = (int)this.thb.getValue();
     	String sPathEntrada = this.dataFilePath;
     	File sPath = this.currentFolder;
+    	String sPathOutput = this.folderPath; 
+    	File oPath = this.outputFolderPath; 
     	
     	
-        taskManager.execute(new org.cytoscape.work.TaskIterator(new Task[] { new ExecuteEnGNetTask(sPath, sPathEntrada, fNMI, fKendall, fSpearman, fAverage, fThb, this) }));
+        taskManager.execute(new org.cytoscape.work.TaskIterator(new Task[] { new ExecuteEnGNetTask(sPath, sPathEntrada, oPath, sPathOutput, fNMI, fKendall, fSpearman, fAverage, fThb, this) }));
     	}catch(Exception e) {
     		CySwing2.displayPopUpMessage("ERROR:" + e.getMessage());
     	}
@@ -222,8 +271,9 @@ public class ConfigurationDialog extends javax.swing.JDialog {
     private void loadDatasetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDatasetButtonActionPerformed
     	JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(currentFolder);
+        
         int returnValue = fileChooser.showOpenDialog(this);
-        if (returnValue != 0) {
+        if (returnValue != JFileChooser.APPROVE_OPTION) {
             return;
         }
         
@@ -235,11 +285,43 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         genesFileTextField.setVisible(true);
     }//GEN-LAST:event_loadDatasetButtonActionPerformed
     
+    private void selectFolderButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	JFileChooser folderChooser = new JFileChooser();
+    	folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    	folderChooser.setCurrentDirectory(outputFolderPath);
+    	int returnValue = folderChooser.showOpenDialog(this);
+    	if (returnValue != 0) {
+    		return;
+    	}
+    	outputFolderPath = folderChooser.getSelectedFile();
+    	folderPath = outputFolderPath.getPath();
+    	
+    	selectFolderButton.setText("Change output folder");
+    	folderTextField.setText(folderPath);
+    	folderTextField.setVisible(true);
+    }
+    
+    private void selectReadmeButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	JDialog dialog = new JDialog();
+    	dialog.setTitle("Input file specifications");
+    	
+    	JLabel textArea = new JLabel("<html><body style='padding:10px; font-size: 14px;'><p>The application expects a tab-delimited file. The file must have the following characteristics: in the first column the name of the genes. This column can contain gene identifiers, regardless of the origin of the identifier. Each row must represent a unique gene. The following columns are study samples of transcriptomic expression data. Each column corresponds to a sample and contains the gene expression levels associated with each gene in that sample.</p><p>It is recomended that the gene expression data be normalized to be compatible with the EnGNet application.</p><p></p><p><b>Note: </b>Execution time is dataset-dependent; a 50,000-gene dataset may take up more than an hour.</p></body></html>");
+    	textArea.setPreferredSize(new java.awt.Dimension(250,250));
+    	
+    	dialog.setSize(400,500);
+    	dialog.setResizable(false);
+    	
+    	dialog.add(textArea);
+    	dialog.setVisible(true);
+    	
+    }
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner averageT;
     private javax.swing.JLabel explanationLabel;
+    private javax.swing.JLabel explanationLabelThr;
     private javax.swing.JButton loadDatasetButton;
     private javax.swing.JLayeredPane datasetsPanel;
     private javax.swing.JLabel jLabel1;
@@ -256,5 +338,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField genesFileTextField;
+    private javax.swing.JTextField folderTextField; 
+    private javax.swing.JButton selectFolderButton; 
+    private javax.swing.JButton readmeButton; 
     // End of variables declaration//GEN-END:variables
 }

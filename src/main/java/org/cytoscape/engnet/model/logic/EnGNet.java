@@ -49,20 +49,23 @@ public class EnGNet {
         return isInterrupted;
     }
 
-    public EnGNetResult execute(File sPath, String sPathEntry, double fNMI, double fKendall, double fSpearman, double fAverage, int fThb) {
+    public EnGNetResult execute(File sPath, String sPathEntry, File oPath, String sPathOutput, double fNMI, double fKendall, double fSpearman, double fAverage, int fThb) {
 
         try {
+        	
+        	File outputFolder =(oPath != null) ? oPath : sPath;
+        	
         	// 1) Execute EnGNet
         	GenesData dg = new GenesData();
         	dg.readInputFile(sPathEntry);
         	GRN g = generateCompleteNetwork(dg, fKendall, fSpearman, fNMI);
         	ArrayList<Gen> genes = new ArrayList(dg.getGenesList());
-        	g.dumpToFile(sPath + System.getProperty("file.separator") + "completeNetwork.txt");
+        	g.dumpToFile(outputFolder + System.getProperty("file.separator") + "completeNetwork.txt");
         	Graph gc = new Graph(g);
         	Graph predominantNetwork = KruskalAlgorithm.applyKruskal(gc);
         	Graph finalNetwork = addGRNrelations(predominantNetwork, dg, fAverage, fThb, fKendall, fSpearman, fNMI);
         	//ArrayList<Gen> genes = new ArrayList(redFinal.getNodos());
-        	finalNetwork.dumpToFile(sPath + System.getProperty("file.separator") + "finalNetwork.txt");    	
+        	finalNetwork.dumpToFile(outputFolder + System.getProperty("file.separator") + "finalNetwork.txt");    	
         	
         	
 		return new EnGNetResult(fNMI,fKendall,fSpearman, fAverage,fThb,finalNetwork,genes,g);

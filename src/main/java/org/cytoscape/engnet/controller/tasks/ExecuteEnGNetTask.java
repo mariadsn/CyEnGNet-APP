@@ -16,6 +16,8 @@ public class ExecuteEnGNetTask extends AbstractTask {
     private EnGNet engnet;
     private final File sPath;
     private final String sPathEntrada;
+    private final File oPath;
+    private final String sPathOutput;
     private final double fNMI;
     private final double fKendall;
     private final double fSpearman;
@@ -24,9 +26,11 @@ public class ExecuteEnGNetTask extends AbstractTask {
 
     private final ConfigurationDialog configurationDialog;
     
-   public ExecuteEnGNetTask(File sPath, String sPathEntrada, double fNMI, double fKendall, double fSpearman, double fAverage, int fThb, ConfigurationDialog configurationDialog) {
+   public ExecuteEnGNetTask(File sPath, String sPathEntrada, File oPath, String sPathOutput, double fNMI, double fKendall, double fSpearman, double fAverage, int fThb, ConfigurationDialog configurationDialog) {
 	   this.sPath = sPath;
 	   this.sPathEntrada = sPathEntrada;
+	   this.oPath = oPath;
+	   this.sPathOutput = sPathOutput;
 	   this.fNMI = fNMI;
 	   this.fKendall = fKendall;
 	   this.fSpearman = fSpearman;
@@ -43,9 +47,9 @@ public class ExecuteEnGNetTask extends AbstractTask {
             ProgressMonitor pm = new CytoscapeTaskMonitor(tm);
             engnet = new EnGNet(pm);
             pm.setStatus("Loading input files");
-            EnGNetResult result = engnet.execute(sPath, sPathEntrada, fNMI, fKendall, fSpearman, fAverage, fThb);
-            CySwing2.displayPopUpMessage("EnGNet anlysis succesfully completed!");
+            EnGNetResult result = engnet.execute(sPath, sPathEntrada, oPath, sPathOutput, fNMI, fKendall, fSpearman, fAverage, fThb);
             insertTasksAfterCurrentTask(new ShowResultsTask(result));
+            CySwing2.displayPopUpMessage("CyEnGNet analysis succesfully completed!");
         } catch (Exception ex) {
         	String error = ex.getMessage();
             CySwing2.displayPopUpMessage(error == null || error.isEmpty()

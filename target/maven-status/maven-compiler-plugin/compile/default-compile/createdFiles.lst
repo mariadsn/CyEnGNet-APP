@@ -1,6 +1,7 @@
 org/cytoscape/engnet/model/businessobjects/utils/Cache.class
 org/cytoscape/engnet/view/resultPanel/MainResultsView$1.class
 org/cytoscape/engnet/controller/NetworkController.class
+org/cytoscape/engnet/view/configurationDialogs/ConfigurationDialog$4.class
 org/cytoscape/engnet/model/businessobjects/EnGNetResult.class
 org/cytoscape/engnet/model/businessobjects/MathematicalMeasurement/Correlation.class
 org/cytoscape/engnet/model/businessobjects/MathematicalMeasurement/NMI.class
@@ -23,6 +24,7 @@ org/cytoscape/engnet/model/businessobjects/model/Node.class
 org/cytoscape/engnet/model/businessobjects/model/performance/GRN.class
 org/cytoscape/engnet/model/businessobjects/model/Link.class
 org/cytoscape/engnet/controller/utils/CySwing2$2.class
+org/cytoscape/engnet/view/configurationDialogs/ConfigurationDialog$3.class
 org/cytoscape/engnet/model/businessobjects/utils/Constants.class
 org/cytoscape/engnet/model/businessobjects/model/performance/Edge.class
 org/cytoscape/engnet/controller/utils/CySwing2.class

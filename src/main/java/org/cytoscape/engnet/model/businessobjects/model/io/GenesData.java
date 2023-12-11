@@ -56,7 +56,7 @@ public class GenesData {
                }
 
                this.addGen(g);
-               System.out.println("Loading line: " + (i + 1));
+               //System.out.println("Loading line: " + (i + 1));
             }
 
             line = br.readLine();
@@ -96,7 +96,7 @@ public class GenesData {
                }
 
                pw.print("\n");
-               System.out.println("Loading line: " + (i + 1));
+               //System.out.println("Loading line: " + (i + 1));
             }
 
             line = br.readLine();

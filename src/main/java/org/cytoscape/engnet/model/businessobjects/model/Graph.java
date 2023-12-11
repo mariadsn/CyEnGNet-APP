@@ -115,10 +115,10 @@ public class Graph {
    }
 
    public void dumpToFile(String path) throws IOException {
-      System.out.println("Writing network into a file");
-      System.out.println("File path: " + path);
-      System.out.println("Number of genes of the network: " + this.nodes.size());
-      System.out.println("Number of edges of the network: " + this.edges.size());
+      //System.out.println("Writing network into a file");
+      //System.out.println("File path: " + path);
+      //System.out.println("Number of genes of the network: " + this.nodes.size());
+      //System.out.println("Number of edges of the network: " + this.edges.size());
       FileWriter filew = new FileWriter(path);
       PrintWriter pw = new PrintWriter(filew);
       Iterator<Arch> it = this.edges.iterator();

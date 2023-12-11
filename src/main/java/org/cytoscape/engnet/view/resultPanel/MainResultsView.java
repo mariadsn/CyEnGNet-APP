@@ -84,12 +84,12 @@ public class MainResultsView extends javax.swing.JPanel implements CytoPanelComp
         spearman.setText(String.format("%.2f", resultPanelController.getResult().getfSpearman()));
         
         SignificantLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        SignificantLabel.setText("Significant threshold");
+        SignificantLabel.setText("Prune threshold");
 
         significant.setText(String.format("%.2f", resultPanelController.getResult().getfAverage()));
         
         thbLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        thbLabel.setText("Thβ threshold");
+        thbLabel.setText("Hub threshold");
 
         thb.setText(String.format("%.2f", resultPanelController.getResult().getfThb()));
 
