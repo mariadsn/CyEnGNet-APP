@@ -33,7 +33,7 @@ The network has a basic style applied to facilitate visual exploration.
 Gómez-Vela, F.; Delgado-Chaves, F.M.; Rodríguez-Baena, D.S.; García-Torres, M.; Divina, F. Ensemble and Greedy Approach for the Reconstruction of Large Gene Co-Expression Networks. Entropy 2019, 21, 1139. https://doi.org/10.3390/e21121139  
 
 ## Cite us
-Under revision
+Saz-Navarro, Dulcenombre M.; López-Fernández, Aurelio; Gómez-Vela, Francisco A.; Rodriguez-Baena, Domingo S. CyEnGNet—App: A new Cytoscape app for the reconstruction of large co-expression networks using an ensemble approach. SoftwareX 2024, Volume 25, DOI:https://doi.org/10.1016/j.softx.2024.101634
   
 
 ## COPYRIGHT
